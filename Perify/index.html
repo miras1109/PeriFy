@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PeriFy Store Management</title>
+</head>
+<body>
+<h1>Управление продуктами магазина PeriFy</h1>
+
+<!-- Добавление продукта -->
+<h2>Добавить продукт</h2>
+<input id="name" placeholder="Название продукта" />
+<input id="price" placeholder="Цена" type="number" />
+<input id="description" placeholder="Описание продукта" />
+<button onclick="addProduct()">Добавить</button>
+
+<!-- Список продуктов -->
+<h2>Список продуктов</h2>
+<button onclick="getProducts()">Показать продукты</button>
+<div id="products"></div>
+
+<!-- Обновление продукта -->
+<h2>Обновить продукт</h2>
+<input id="updateId" placeholder="ID продукта" />
+<input id="updateName" placeholder="Новое название" />
+<input id="updatePrice" placeholder="Новая цена" type="number" />
+<input id="updateDescription" placeholder="Новое описание" />
+<button onclick="updateProduct()">Обновить</button>
+
+<!-- Удаление продукта -->
+<h2>Удалить продукт</h2>
+<input id="deleteId" placeholder="ID продукта" />
+<button onclick="deleteProduct()">Удалить</button>
+
+<script>
+  function addProduct() {
+    const payload = {
+      name: document.getElementById("name").value,
+      price: parseInt(document.getElementById("price").value),
+      description: document.getElementById("description").value
+    };
+
+    fetch("http://localhost:8080/products/create", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    })
+            .then(res => res.json())
+            .then(data => {
+              if (data.message) {
+                alert(data.message); // Показывает только текст сообщения
+              } else {
+                alert("Ошибка: некорректный ответ от сервера");
+              }
+            })
+            .catch(err => console.error("Ошибка:", err));
+  }
+
+
+  function getProducts() {
+    fetch("http://localhost:8080/products")
+            .then(res => res.json())
+            .then(data => {
+              let html = "<ul>";
+              data.forEach(p => html += `<li>ID: ${p.id}, Название: ${p.name}, Цена: ${p.price}, Описание: ${p.description}</li>`);
+              html += "</ul>";
+              document.getElementById("products").innerHTML = html;
+            });
+  }
+
+  function updateProduct() {
+    const id = document.getElementById("updateId").value;
+    const payload = {
+      name: document.getElementById("updateName").value,
+      price: parseInt(document.getElementById("updatePrice").value),
+      description: document.getElementById("updateDescription").value
+    };
+
+    fetch(`http://localhost:8080/products/update?id=${id}`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    })
+            .then(res => res.json())
+            .then(data => {
+              alert(data.message || "Продукт обновлен");
+            })
+            .catch(err => console.error("Ошибка:", err));
+  }
+
+
+  function deleteProduct() {
+    const id = document.getElementById("deleteId").value;
+
+    fetch(`http://localhost:8080/products/delete?id=${id}`, {
+      method: "DELETE"
+    })
+            .then(res => res.json())
+            .then(data => {
+              alert(data.message || "Продукт удален");
+            })
+            .catch(err => console.error("Ошибка:", err));
+  }
+
+</script>
+</body>
+</html>
