@@ -16,7 +16,7 @@ PeriFy is targeted at **gamers, tech enthusiasts, and professionals** who requir
 
 
 ## Team Members
-- Iman Meraliev(SE-2319),Erasyl Edilzhan(SE-2314),Miras Kozhakhmetov(SE-2316)
+- Iman Meraliev(SE-2319),Erasyl Edilzhan(SE-2314),Miras Kozhakhmetov(SE-2314)
 
 ## Screenshot of the Main Page
 ![Main Page](screenshot.png)
