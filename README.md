@@ -51,3 +51,9 @@ PeriFy is targeted at **gamers, tech enthusiasts, and professionals** who requir
 - **MongoDB**: Database for storing product data
 - **HTML & JavaScript**: Frontend interface
 - **Postman**: For testing API endpoints
+
+- Tools and Resources Used
+Go (Golang): Backend development for building the API.
+MongoDB: Database for secure and efficient storage of product data.
+HTML & JavaScript: Frontend for user interaction and product management.
+Postman: For testing and validating API endpoints during development.
